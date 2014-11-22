@@ -85,11 +85,7 @@ module EmailAuthentication
       msg='smtp not ok'
       domain=self.from.split('@')
       @fromdomain = domain[1]
-      if @mx.include?('google') or @mx.include?('live.com')
-         # DO I Need to do this?
-         flag=true
-         msg="smtp not checked since google or live: #{@mx}"
-      else
+      if !@mx.nil?
         begin 
           smtp = Net::Telnet::new("Host" => @mx, 'Port' => 25, "Telnetmode" => false, "Prompt" => /^\+OK/)
           c=""
@@ -112,7 +108,7 @@ module EmailAuthentication
           @flag=false
           msg= "smtp exception #{e.message}"
         end
-      end if @mx!=nil
+      end
       
      [flag,msg]
    end
