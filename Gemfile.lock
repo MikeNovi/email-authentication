@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    email-authentication (0.2.5)
+    email-authentication (0.2.6)
       dnsruby
       thor
 
@@ -10,14 +10,14 @@ GEM
   specs:
     codeclimate-test-reporter (0.1.1)
       simplecov (>= 0.7.1, < 1.0.0)
-    dnsruby (1.54)
+    dnsruby (1.57.0)
     minitest (5.0.8)
     multi_json (1.8.2)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
-    thor (0.18.1)
+    thor (0.19.1)
 
 PLATFORMS
   ruby

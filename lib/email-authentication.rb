@@ -3,5 +3,5 @@ $:.unshift(File.dirname(__FILE__)) unless
   Dir[File.join(File.dirname(__FILE__), 'email-authentication/**/*.rb')].sort.each { |lib| require lib }
 
 module EmailAuthentication
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
 end

@@ -6,24 +6,37 @@ class EmailSMTPAuthenticationTest <  Minitest::Test
 
   def setup
     @f=EmailAuthentication::Base.new
-    @success='scott.sproule@ficonab.com'
-    @from='scott.sproule@estormtech.com'
-    @success2='info2@paulaner.com.sg'
+    @authentic = 'scott.sproule@ficonab.com'
+    @from = 'scott.sproule@estormtech.com'
+    @authentic2 = 'info2@paulaner.com.sg'
+    @not_authentic = 'sassafras_jones@michaelnovi.com'
+    @blocked = 'sassafras_jones@odney.com'
+    
   end
   
   def test_google_mx
-        @f.set_address(@success,@from)
-        success,msg= @f.check(@success,@from)
-        assert success,"check did not succeed"
-        puts msg
-    end
-    
-    def test_smtp_mx
-           success,msg= @f.check(@success2,@from)
-           # uncomment this if not on travis as travis seems to block the port
-          # assert success,"check did not succeed #{msg}"
-           puts msg
-    end
+    @f.set_address(@authentic, @from)
+    success,msg= @f.check(@authentic, @from)
+    assert_equal success, EmailAuthentication::AUTHENTIC
+    puts msg
+  end
+  
+  def test_smtp_mx
+    success,msg= @f.check(@authentic2, @from)
+    # uncomment this if not on travis as travis seems to block the port
+    assert_equal success, EmailAuthentication::AUTHENTIC
+    puts msg
+  end
  
+  def test_smtp_mx_blocked
+    success,msg= @f.check(@blocked, @from)
+    assert_equal success, EmailAuthentication::UNKNOWN
+    puts msg
+  end
 
+  def test_smtp_mx_not_authentic
+    success,msg= @f.check(@not_authentic, @from)
+    assert_equal success, EmailAuthentication::NOT_AUTHENTIC
+    puts msg
+  end
 end
