@@ -17,26 +17,26 @@ class EmailSMTPAuthenticationTest <  Minitest::Test
   def test_google_mx
     @f.set_address(@authentic, @from)
     success,msg= @f.check(@authentic, @from)
-    assert_equal success, EmailAuthentication::AUTHENTIC
+    assert_equal success, EmailAuthentication::VALID
     puts msg
   end
   
   def test_smtp_mx
     success,msg= @f.check(@authentic2, @from)
     # uncomment this if not on travis as travis seems to block the port
-    assert_equal success, EmailAuthentication::AUTHENTIC
+    assert_equal success, EmailAuthentication::VALID
     puts msg
   end
  
   def test_smtp_mx_blocked
     success,msg= @f.check(@blocked, @from)
-    assert_equal success, EmailAuthentication::UNKNOWN
+    assert_equal success, EmailAuthentication::BLOCKED
     puts msg
   end
 
   def test_smtp_mx_not_authentic
     success,msg= @f.check(@not_authentic, @from)
-    assert_equal success, EmailAuthentication::NOT_AUTHENTIC
+    assert_equal success, EmailAuthentication::NOT_VALID
     puts msg
   end
 end

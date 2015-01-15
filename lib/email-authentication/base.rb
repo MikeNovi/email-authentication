@@ -7,9 +7,10 @@ require 'net/telnet'
 
 module EmailAuthentication
   # Return constants
-  AUTHENTIC = 1
-  NOT_AUTHENTIC = 2
+  VALID = 1
+  NOT_VALID = 2
   UNKNOWN = 3
+  BLOCKED = 4
 
   class Base
     attr_accessor :address, :mx, :message, :domain, :from, :fromdomain, :name
@@ -28,7 +29,7 @@ module EmailAuthentication
       raise "from address blank" if from==""
       self.address=address.to_s
       self.from=from
-      @flag=AUTHENTIC
+      @flag=VALID
     end
 
     # this needs work.  Anyone who can improve the regex i would be happy to put in their changes
@@ -38,9 +39,9 @@ module EmailAuthentication
       res=(@address =~ @@email_regex)
       #puts " res is #{res}"
       if res
-        [AUTHENTIC,"format ok"]
+        [VALID,"format ok"]
       else
-        [NOT_AUTHENTIC,"format failed"]
+        [NOT_VALID,"format failed"]
       end
     end
 
@@ -56,7 +57,7 @@ module EmailAuthentication
       @domain = domain[1]
       @name=domain[0]
       #puts "domain is #{domain}"
-      flag=NOT_AUTHENTIC
+      flag=NOT_VALID
       if @domain!=nil
         begin
           ret = self.resolver.query(@domain, Types.MX)
@@ -65,7 +66,7 @@ module EmailAuthentication
             @mx=@mx.downcase
             msg= "mx record #{self.mx}"
             puts msg
-            flag = AUTHENTIC
+            flag = VALID
           end
         rescue Dnsruby::NXDomain 
           msg="non existing domain #{@domain}"
@@ -121,9 +122,9 @@ module EmailAuthentication
             print "CMD: #{cmd} RESP: #{c}" 
             msg = "smtp test: #{cmd} resp: #{c}"
             if c.include?('250') 
-              flag = AUTHENTIC
+              flag = VALID
             elsif c.include?('550') || c.include?('450')
-              flag = c.include?('blocked') ? UNKNOWN : NOT_AUTHENTIC
+              flag = c.include?('blocked') ? BLOCKED : NOT_VALID
             end  
           }
           

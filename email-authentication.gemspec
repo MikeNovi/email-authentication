@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "email-authentication"
-  s.version     = "0.2.8"
+  s.version     = "0.2.9"
   s.author      = "Scott Sproule"
   s.email       = "scott.sproule@ficonab.com"
   s.homepage    = "http://github.com/semdinsp/email-authentication"
