@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "email-authentication"
-  s.version     = "0.3.-"
+  s.version     = "0.3.0"
   s.author      = "Michael Novi"
   s.email       = "me@michaelnovi.com"
   s.homepage    = "http://github.com/mikenovi/email-authentication"
