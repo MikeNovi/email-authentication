@@ -118,7 +118,7 @@ module EmailAuthentication
           cmd="RCPT TO:<" +@address+ ">"
           
           sleep 0.5
-          smtp.cmd('String' => cmd, 'Match'=> /^250|^450|^550/ ) { |c| 
+          smtp.cmd('String' => cmd, 'Match'=> /^[245]5\d/ ) { |c| 
             print "CMD: #{cmd} RESP: #{c}" 
             msg = "smtp test: #{cmd} resp: #{c}"
             if c.include?('250') 
