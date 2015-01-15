@@ -96,7 +96,13 @@ module EmailAuthentication
       @fromdomain = domain[1]
       if !@mx.nil?
         begin 
-          smtp = Net::Telnet::new("Host" => @mx, 'Port' => 25, "Telnetmode" => false, "Prompt" => /^\+OK/)
+          smtp = Net::Telnet::new(
+            "Host" => @mx, 
+            "Port" => 25, 
+            "Telnetmode" => false, 
+            "Prompt" => /^\+OK/,
+            "Timeout" => 60
+            )
           c=""
           msg=c
           
