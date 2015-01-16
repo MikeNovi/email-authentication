@@ -124,7 +124,7 @@ module EmailAuthentication
             if c.include?('250') 
               flag = VALID
             elsif /[45]5\d/.match(c)
-              if c.include?('blocked')
+              if c.include?('blocked') || /5\.7\.1/.match(c)
                 flag = BLOCKED 
               elsif /5\.1\.\d/.match(c)
                 flag = NOT_VALID
