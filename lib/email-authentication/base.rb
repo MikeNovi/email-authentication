@@ -123,10 +123,10 @@ module EmailAuthentication
             msg = "smtp test: #{cmd} resp: #{c}"
             if c.include?('250') 
               flag = VALID
-            elsif /[45]5\d/.match(c)
+            elsif /[45]50/.match(c)
               if c.include?('blocked') || /5\.7\.1/.match(c)
                 flag = BLOCKED 
-              elsif /5\.1\.\d/.match(c)
+              elsif /5\.1\.\d/.match(c) || !(/\d\.\d\.\d/.match(c))
                 flag = NOT_VALID
               end
             end  
